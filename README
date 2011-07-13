@@ -1,0 +1,31 @@
+                            {/ ． ．\}
+                            ( (oo)   )
++---------------------oOOo---︶︶︶︶---oOOo---------------------+
+#     FileName  :           README
+#     Describe  :           Direction for my vim/gvim setting
+#     Author    :           Honkey.y
+#     Email     :           honker.ying@gmail.com
+#     HomePage  :           NULL
+#     Version   :           0.0.1
+#     LastChange:           2011-07-13 13:51:15
+#     History   :           This is basic
++---------------------------------------------Oooo---------------+
+
+All the first,you must sure you have installed 'catg' and 'cscope'.
+What?you haven't?It dosn't matter,you can install them like this:
+1.install ctag
+You can find a dir 'tools/taglist_45/',ok,do these:
+    $cd tools/taglist_45/
+    $make
+    $sudo make install
+If have no accidents happend,It's ok!
+2.Install cscope
+    $sudo apt-get install cscope
+
+<F2>------------------Run a python or shell file
+<F3>------------------Show tags in the side of the window
+<F4>------------------Add author's info
+<F5>------------------Compile a c/c++ file
+<F6>------------------Run makefile
+<F7>------------------Set a mark
+<F8>-------------------
