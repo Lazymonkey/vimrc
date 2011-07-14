@@ -360,7 +360,7 @@ map <F7> :exe ":sign place 2 line=" . line('.') . " name=siv file=" . expand("%:
 
 "sign place {id} line={lnum} name={name} file={fname}
 "map <F7> :exe ":sign place 2 line=" . line('.') . " name=haha file=" .  expand("%:p")<cr>
-map <C-F7> :sign unplace *<cr>
+map <S-F7> :sign unplace *<cr>
 
 "}}}
 "{{{气泡提示

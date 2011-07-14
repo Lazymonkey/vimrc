@@ -1,15 +1,19 @@
                             {/ ． ．\}
                             ( (oo)   )
 +---------------------oOOo---︶︶︶︶---oOOo---------------------+
-#     FileName  :           README
-#     Describe  :           Direction for my vim/gvim setting
-#     Author    :           Honkey.y
-#     Email     :           honker.ying@gmail.com
-#     HomePage  :           NULL
-#     Version   :           0.0.1
-#     LastChange:           2011-07-13 13:51:15
-#     History   :           This is basic
+
+
+
+     Version   :           0.0.1
+
+     LastChange:           2011-07-13 13:51:15
+
+
+                                                    Lazy.monkey™
+                                           honker.ying@gmail.com
 +---------------------------------------------Oooo---------------+
+
+===INSTALL===
 
 All the first,you must sure you have installed 'catg' and 'cscope'.
 What?you haven't?It dosn't matter,you can install them like this:
@@ -22,10 +26,16 @@ If have no accidents happend,It's ok!
 2.Install cscope
     $sudo apt-get install cscope
 
+===ANY KEY MAP===
+
 <F2>------------------Run a python or shell file
 <F3>------------------Show tags in the side of the window
 <F4>------------------Add author's info
 <F5>------------------Compile a c/c++ file
 <F6>------------------Run makefile
-<F7>------------------Set a mark
-<F8>-------------------
+<F7>------------------Make a sign
+<S-F7>----------------Delete a sign
+<F8>------------------Show class info
+<F9>------------------Delete '^M'
+<F11>-----------------Show menu bar
+<F12>-----------------Do ctag
