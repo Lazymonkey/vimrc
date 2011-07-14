@@ -1,30 +1,40 @@
-                            {/ ． ．\}
-                            ( (oo)   )
-+---------------------oOOo---︶︶︶︶---oOOo---------------------+
+                {/ ． ．\}
+                ( (oo)   )
++---------oOOo---︶︶︶︶---oOOo---------------+
 
 
 
-     Version   :           0.0.1
+     Version   :    0.0.1
 
-     LastChange:           2011-07-13 13:51:15
+     LastChange:    2011-07-13 13:51:15
 
 
-                                                    Lazy.monkey™
-                                           honker.ying@gmail.com
-+---------------------------------------------Oooo---------------+
+                                   Lazy.monkey™
+                          honker.ying@gmail.com
++-------------------------------Oooo-----------+
 
 ===INSTALL===
 
-All the first,you must sure you have installed 'catg' and 'cscope'.
+All the first,you must make sure you have installed 'catgs' and 'cscope'.
 What?you haven't?It dosn't matter,you can install them like this:
-1.install ctag
-You can find a dir 'tools/taglist_45/',ok,do these:
-    $cd tools/taglist_45/
-    $make
-    $sudo make install
-If have no accidents happend,It's ok!
-2.Install cscope
-    $sudo apt-get install cscope
+
++----------------------------------------------------+
+|1.install ctags                                     |
+|You can find a dir 'tools/ctags-5.8/',ok,do these:  |
+|   $ cd tools/ctags-5.8/                            |
+|   $ make                                           |
+|   $ sudo make install                              |
+|If have no accidents happend,It's ok!               |
+|2.Install cscope                                    |
+|   $ sudo apt-get install cscope                    |
++----------------------------------------------------+
+
+for Unix-like(Mac, Linux):
+    $ cd ~
+    $ mkdir temp && cd temp
+    $ git clone git@github.com:Lazymonkey/vimrc.git
+    $ cd vimrc
+    $ cp ./ ~/.vim
 
 ===ANY KEY MAP===
 

@@ -16,8 +16,9 @@
 "
 " +---------------------------------Oooo-----------+
 "Lazy.monkey™'s Vim settings, plugins...
+
 "you can get my settings from github,like this :
-"git clone http://git/github/honker.ying
+"$ git clone git@git.com:Lazymonkey/vimrc.git
 "set dictionary+=/usr/share/dict/words
 "{{{基本设置
 set nocompatible            " 关闭 vi 兼容模式
