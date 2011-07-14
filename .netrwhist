@@ -1,4 +1,9 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =2
+let g:netrw_dirhist_cnt =7
 let g:netrw_dirhist_1='/home/lazymonkey/downloads/git-1.7.6/t'
 let g:netrw_dirhist_2='/home/lazymonkey/.vim'
+let g:netrw_dirhist_3='/home/lazymonkey/workspace/python_lerning'
+let g:netrw_dirhist_4='/home/lazymonkey/workspace'
+let g:netrw_dirhist_5='/home/lazymonkey/workspace/python_lerning'
+let g:netrw_dirhist_6='/home/lazymonkey/workspace/gtk_learning'
+let g:netrw_dirhist_7='/home/lazymonkey/workspace/gtk_learning/lifehelper'

@@ -274,7 +274,7 @@ endif
 "}}}
 "{{{进行版权声明的设置
 "添加或更新头（插件AuthorInfo）
-let g:vimrc_author='Honkey.y'
+let g:vimrc_author='Lazy.monkey™'
 let g:vimrc_email='honker.ying@gmail.com'
 let g:vimrc_homepage='NULL'
 nmap <F4> :AuthorInfoDetect<cr>
