@@ -4,8 +4,9 @@
 "  FileName:        authorinfo.vim
 "  Description:
 "  Version:         1.4
-"  LastChange:      2011-02-23 16:42:42
+"  LastChange:      2011-07-14 23:30:10
 "  History:         fix bug for NerdComment's <leader>
+"  Modified:        Lazy.monkey™
 "=============================================================================
 
 if exists("mapleader")
@@ -107,11 +108,13 @@ function s:AddTitle()
     call s:BeforeTitle()
 
     let firstLine = line('.')
-    call setline('.',noTypeChar.'                            {/ ． ．\}')
+    call setline('.',noTypeChar.'')
     normal o
-    call setline('.',noTypeChar.'                            ( (oo)   )')
+    call setline('.',noTypeChar.'                 {/ ． ．\}')
     normal o
-    call setline('.',noTypeChar.'+---------------------oOOo---︶︶︶︶---oOOo---------------------+')
+    call setline('.',noTypeChar.'                 ( (oo)   )')
+    normal o
+    call setline('.',noTypeChar.'+-----------oOOo---︶︶︶︶---oOOo---------------+')
     normal o
     call setline('.',noTypeChar.preChar.'     FileName  :           '.expand("%:t"))
     normal o
@@ -130,7 +133,10 @@ function s:AddTitle()
     normal o
     call setline('.',noTypeChar.preChar.'     History   :           ')
     normal o
-    call setline('.',noTypeChar.'+---------------------------------------------Oooo---------------+')
+    call setline('.',noTypeChar.'+---------------------------------Oooo-----------+')
+    normal o
+    call setline('.',noTypeChar.'')
+    normal o
     let lastLine = line('.')
 
     "在最后一行之后做的事情
