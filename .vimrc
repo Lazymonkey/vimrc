@@ -172,6 +172,7 @@ nmap <leader>p "+p
 nmap <leader>P "+P
 "}}}
 "{{{一键编译单个源文件
+imap <C-F5> :call Do_OneFileMake()<CR>
 map <F5> :call Do_OneFileMake()<CR>
 function Do_OneFileMake()
 	if expand("%:p:h")!=getcwd()
