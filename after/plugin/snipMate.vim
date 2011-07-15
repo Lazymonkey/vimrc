@@ -6,8 +6,8 @@ endif
 let s:did_snips_mappings = 1
 au FileType python call MatePython()
 function MatePython()
-	ino <c-j> <c-r>=TriggerSnippet()<cr>
-	snor <c-j> <esc>i<right><c-r>=TriggerSnippet()<cr>
+	ino <S-space> <c-r>=TriggerSnippet()<cr>
+	snor <S-space> <esc>i<right><c-r>=TriggerSnippet()<cr>
 endfunction
 ino <silent> <tab> <c-r>=TriggerSnippet()<cr>
 snor <silent> <tab> <esc>i<right><c-r>=TriggerSnippet()<cr>

@@ -22,6 +22,7 @@ What?you haven't?It dosn't matter,you can install them like this:
 |1.install ctags                                     |
 |You can find a dir 'tools/ctags-5.8/',ok,do these:  |
 |   $ cd tools/ctags-5.8/                            |
+|   $ ./configure                                    |
 |   $ make                                           |
 |   $ sudo make install                              |
 |If have no accidents happend,It's ok!               |

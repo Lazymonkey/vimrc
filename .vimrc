@@ -449,11 +449,10 @@ let Tlist_Ctags_Cmd='ctags' "因为我们放在环境变量里，所以可以直
 let Tlist_Use_Right_Window=0 "让窗口显示在右边，0的话就是显示在左边
 let Tlist_Show_One_File=0 "让taglist可以同时展示多个文件的函数列表，如果想只有1个，设置为1
 let Tlist_File_Fold_Auto_Close=1 "非当前文件，函数列表折叠隐藏
-let Tlist_Exit_OnlyWindow=1 "当taglist是最后一个分割窗口时，自动推出vim
+let Tlist_Exit_OnlyWindow=1 "当taglist是最后一个分割窗口时，自动退出vim
 "是否一直处理tags.1:处理;0:不处理
 let Tlist_Process_File_Always=0 "不是一直实时更新tags，因为没有必要
 let Tlist_Inc_Winwidth=0
-"/pre>
 "---------------------------------------end Configure the plugin -taglist----------------------------------------
 "}}}
 "{{{-----------------------------------------Configure the plugin -cscope------------------------------------------
@@ -580,36 +579,48 @@ let g:pydiction_location = '~/.vim/tools/pydiction/complete-dict'
 "--------------------------------------------end Configure plugin-python_pydiction-------------------------------------------------------------
 "}}}
 "{{{-----------------------------------------Configure the plugin -SnipMate------------------------------------------------------------
-au FileType python set ft=python.django
-au FileType html set ft=htmldjango.html
+"au FileType python set ft=python.django
+"au FileType html set ft=htmldjango.html
 "--------------------------------------------end Configure plugin-SnipMate-------------------------------------------------------------
 "}}}
-"{{{-----------------------------------------python 和 shell 单个文件一键执行--------------------------------------------------------------------------------------
-" Check the syntax of a python file
-function! CheckPythonSyntax()
-    if &filetype != 'python'
-        echohl WarningMsg | echo 'This is not a Python file !' | echohl None
-        return
-    endif
-    setlocal makeprg=python\ -u\ %
-    set efm=%C\ %.%#,%A\ \ File\ \"%f\"\\,\ line\ %l%.%#,%Z%[%^\ ]%\\@=%m
-    echohl WarningMsg | echo 'Syntax checking output:' | echohl None
-    if &modified == 1
-        silent write
-    endif
-    exec "silent make -c \"import py_compile;py_compile.compile(r'".bufname("%")."')\""
-    clist
+"{{{-----------------------------------------python、php 和 shell 单个文件一键执行--------------------------------------------------------------------------------------
+ "Run a PHP script
+   function! ExecutePHPScript()
+       if &filetype != 'php'
+           echohl WarningMsg | echo 'This is not a PHP file !' | echohl None
+           return
+       endif
+       setlocal makeprg=php\ -f\ %
+       setlocal errorformat=%m\ in\ %f\ on\ line\ %l
+       echohl WarningMsg | echo 'Execution output:' | echohl None
+       if &modified == 1
+           silent write
+       endif
+       silent make
+       clist
+   endfunction
+   au filetype php map <F5> :call ExecutePHPScript()<CR>
+   au filetype php imap <C-F5> <ESC>:call ExecutePHPScript()<CR>
+" Run a python script
+function! ExecutePythonScript()
+   if &filetype != 'python'
+       echohl WarningMsg | echo 'This is not a Python file !' | echohl None
+       return
+   endif
+   setlocal makeprg=python\ -u\ %
+   set efm=%C\ %.%#,%A\ \ File\ \"%f\"\\,\ line\ %l%.%#,%Z%[%^\ ]%\\@=%m
+   echohl WarningMsg | echo 'Execution output:' | echohl None
+   if &modified == 1
+       silent write
+   endif
+   silent make
+   clist
 endfunction
-au filetype python map <F2> :call CheckPythonSyntax()<CR>
-au filetype python imap <F2> <ESC>:call CheckPythonSyntax()<CR>
-
-map <F2> :call RunOnePythonFile()<CR>
-func! RunOnePythonFile()
-	exec "w"
-	exec "!chmod +x %"
-	exec "w"
-	exec "!./%"
-endfunction
+au filetype python map <F5> :call ExecutePythonScript()<CR>
+au filetype python imap <C-F5> <ESC>:call ExecutePythonScript()<CR>
+ "Run a SHELL script
+au filetype sh map <F5> :!bash ./% <CR>
+au filetype sh imap <C-F5> <ESC>:!bash ./% <CR>
 "}}}
 "{{{python 调试
 python << EOF
