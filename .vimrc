@@ -99,7 +99,22 @@ set fileformats=unix,dos    " 保存文件格式
 set statusline=%k%F[%{&ff}:%{&fenc}]%m%r%h%w\ %{strftime(\"%d/%m/%y\ -\ %H:%M\")}\ %=[%{GitBranch()}]\ %=[%l,%c,%p%%]
 							"状态栏信息
 """}}}
-"""{{{补全功能
+"{{{设定<leader>取词功能
+nmap <silent><leader>d :!sdcv <cword> <CR>
+                            "设置字典（配合sdcv）
+                            "安装：$sudo apt-get install sdcv
+                            "下载 stardic 的本地字典即可。（~/.stardict/dic/）!
+"}}}
+"{{{打开文件时恢复上次编辑的位置
+if has("autocmd")
+    autocmd BufRead *.txt set tw=78
+    autocmd BufReadPost *
+                \ if line("'\"") > 0 && line ("'\"") <= line("$") |
+                \   exe "normal g'\"" |
+                \ endif
+endif
+"}}}
+"{{{补全功能
 "自动补全
 filetype plugin indent on
 set completeopt=longest,menu
@@ -113,7 +128,7 @@ autocmd FileType css set omnifunc=csscomplete#CompleteCSS
 autocmd FileType xml set omnifunc=xmlcomplete#CompleteTags
 autocmd FileType java set omnifunc=javacomplete#Complet
 
-"""}}}
+"}}}
 " 代码折叠设置 {{{
 set foldenable                  " enable folding
 set foldcolumn=2                " add a fold column
@@ -140,7 +155,8 @@ map <silent> <F11> :if &guioptions =~# 'T' <Bar>
 "{{{绑定一些快捷键
 " Quick yanking to the end of the line
 imap jj <Esc>
-imap <C-s> <Esc>:w<Enter>
+imap <C-s> <Esc>:w<CR>
+nmap <C-s> <Esc>:w<CR>
 nmap CapsLock <Esc>
 nmap Y y$
 nnoremap j gj
@@ -170,9 +186,12 @@ nmap <leader>y "+y
 nmap <leader>Y "+yy
 nmap <leader>p "+p
 nmap <leader>P "+P
+"在标签页间跳转
+map <C-p> :tabp<CR>
+map <C-b> :tabn<CR>
 "}}}
 "{{{一键编译单个源文件
-imap <C-F5> :call Do_OneFileMake()<CR>
+imap <C-F5> <ESC>:call Do_OneFileMake()<CR>
 map <F5> :call Do_OneFileMake()<CR>
 function Do_OneFileMake()
 	if expand("%:p:h")!=getcwd()
@@ -281,48 +300,48 @@ let g:vimrc_homepage='NULL'
 nmap <F4> :AuthorInfoDetect<cr>
 "将键盘上的F8功能键映射为添加作者信息的快捷键
 "map <F4> :call TitleDet()<cr>'s
-function AddTitle()
-	 call append(0,"/*******************************************************************************")
-     call append(1," * Author          :Honker.y")
-     call append(2," * Email           :Honker.ying@gmail.com")
-     call append(3," * Last modified   :".strftime("%Y-%m-%d %H:%M"))
-     call append(4," * Filename        :".expand("%:t"))
-	 call append(5," * version         :")
-     call append(6," * Description     :")
-	 call append(7," *Revision         :")
-	 call append(8," * Compiler        :")
-	 call append(9," * Install         :")
-	 call append(10," * Use             :")
-     call append(11," *******************************************************************************/")
-	    echohl WarningMsg | echo "Successful in adding the copyright." | echohl None
-endf
+"   function AddTitle()
+"        call append(0,"/*******************************************************************************")
+"        call append(1," * Author          :Honker.y")
+"        call append(2," * Email           :Honker.ying@gmail.com")
+"        call append(3," * Last modified   :".strftime("%Y-%m-%d %H:%M"))
+"        call append(4," * Filename        :".expand("%:t"))
+"        call append(5," * version         :")
+"        call append(6," * Description     :")
+"        call append(7," *Revision         :")
+"        call append(8," * Compiler        :")
+"        call append(9," * Install         :")
+"        call append(10," * Use             :")
+"        call append(11," *******************************************************************************/")
+"           echohl WarningMsg | echo "Successful in adding the copyright." | echohl None
+"   endf
 "更新最近修改时间和文件名
-function UpdateTitle()
-    normal m'
-    execute '/# *Last modified:/s@:.*$@\=strftime(":\t%Y-%m-%d %H:%M")@'
-    normal ''
-    normal mk
-    execute '/# *Filename:/s@:.*$@\=":\t\t".expand("%:t")@'
-    execute "noh"
-    normal 'k
-    echohl WarningMsg | echo "Successful in updating the copy right." | echohl None
-endfunction
+"   function UpdateTitle()
+"       normal m'
+"       execute '/# *Last modified:/s@:.*$@\=strftime(":\t%Y-%m-%d %H:%M")@'
+"       normal ''
+"       normal mk
+"       execute '/# *Filename:/s@:.*$@\=":\t\t".expand("%:t")@'
+"       execute "noh"
+"       normal 'k
+"       echohl WarningMsg | echo "Successful in updating the copy right." | echohl None
+"   endfunction
 "判断前10行代码里面，是否有Last modified这个单词，
 "如果没有的话，代表没有添加过作者信息，需要新添加；
 "如果有的话，那么只需要更新即可
-function TitleDet()
-    let n=1
+"   function TitleDet()
+"       let n=1
     "默认为添加
-    while n < 10
-        let line = getline(n)
-        if line =~ '^\#\s*\S*Last\smodified:\S*.*$'
-            call UpdateTitle()
-            return
-        endif
-        let n = n + 1
-    endwhile
-    call AddTitle()
-endfunction
+"       while n < 10
+"           let line = getline(n)
+"           if line =~ '^\#\s*\S*Last\smodified:\S*.*$'
+"               call UpdateTitle()
+"               return
+"           endif
+"           let n = n + 1
+"       endwhile
+"       call AddTitle()
+"   endfunction
 "}}}
 "{{{窗口分割时,进行切换的按键热键需要连接两次,比如从下方窗口移动
 "光标到上方窗口,需要<c-w><c-w>k,非常麻烦,现在重映射为<c-k>,切换的
@@ -428,8 +447,21 @@ let g:vimwiki_valid_html_tags='b,i,s,u,sub,sup,kbd,del,br,hr,div,code,h1'
 "警告! 以下为高级内容，虽然我手把手在教，但毕竟折腾耗时。
 "而且您的操作可能因为 vimwiki 将来的版本升级而失效。
 "请评估自己的时间成本！
-map <S-s> :VimwikiAll2HTML<cr>
-map <c-s> :Vimwiki2HTML<cr>
+"一键执行wiki文件
+au filetype vimwiki map <S-F5> :call RunAllVimwikiFile()<cr>
+"au filetype vimwiki map <F5> :Vimwiki2HTML<cr>
+au filetype vimwiki map <F5> :call RunOneVimwikiFile()<CR>
+func! RunOneVimwikiFile()
+    exec "w"
+    exec "Vimwiki2HTML"
+    exec "!google-chrome ~/vimwiki_html/%<.html"
+endfunction
+
+func! RunAllVimwikiFile()
+    exec "w"
+    exec "VimwikiAll2HTML"
+    exec "!google-chrome ~/vimwiki_html/*.html"
+endfunction
 "}}}
 "{{{-----------------------------------------Configure the plugin -taglist------------------------------------------
 ""	map <F4> :silent! Tlist<CR> " 按下F3呼出
@@ -582,6 +614,7 @@ let g:pydiction_location = '~/.vim/tools/pydiction/complete-dict'
 "{{{-----------------------------------------Configure the plugin -SnipMate------------------------------------------------------------
 "au FileType python set ft=python.django
 "au FileType html set ft=htmldjango.html
+au FileType plaintex set ft=tex
 "--------------------------------------------end Configure plugin-SnipMate-------------------------------------------------------------
 "}}}
 "{{{-----------------------------------------python、php 和 shell 单个文件一键执行--------------------------------------------------------------------------------------
@@ -622,6 +655,13 @@ au filetype python imap <C-F5> <ESC>:call ExecutePythonScript()<CR>
  "Run a SHELL script
 au filetype sh map <F5> :!bash ./% <CR>
 au filetype sh imap <C-F5> <ESC>:!bash ./% <CR>
+au filetype tex map <F5> :call RunOneLaztexFile()<CR>
+func! RunOneLaztexFile()
+    exec "w"
+    exec "!pdflatex ./%"
+    exec "!evince ./%<.pdf"
+endfunction
+au filetype html map <F5> :!google-chrome ./% <CR>
 "}}}
 "{{{python 调试
 python << EOF
