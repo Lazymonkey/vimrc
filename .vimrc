@@ -51,7 +51,7 @@ set hidden                  " 允许在有未保存的修改时切换缓冲区�
 set smartindent             " 开启新行时使用智能自动缩进
 set backspace=indent,eol,start
                             " 不设定在插入状态无法用退格键和 Delete 键删除回车符
-set cmdheight=1             " 设定命令行的行数为 1
+set cmdheight=2             " 设定命令行的行数为 1
 set laststatus=2            " 显示状态栏 (默认值为 1, 无法显示状态栏)
 "set foldenable             " 开始折叠
 "set foldmethod=syntax      " 设置语法折叠
@@ -59,7 +59,10 @@ set laststatus=2            " 显示状态栏 (默认值为 1, 无法显示状�
 "setlocal foldlevel=1       " 设置折叠层数为
 autocmd Filetype c :set equalprg=indent
 							"如果是c文件调用GNU indet 进行排版
-set guifont=Consolas\ \ Italic\ 14	"设置字体
+"set guifont=Consolas\ \ Italic\ 14	"设置字体
+"set guifont=Consolas\ \ Regular\ 14"设置字体
+set guifont=Monaco\ \ Regular\ 14"设置字体
+"set guifont=Monaco \\ Regular\ 14
 set gfw=Consolas\ \ Regular\ 11	"设置中文字体
 "exe
 "startinsert
@@ -154,7 +157,7 @@ map <silent> <F11> :if &guioptions =~# 'T' <Bar>
 "}}}
 "{{{绑定一些快捷键
 " Quick yanking to the end of the line
-imap jj <Esc>
+imap <C-]> <Esc>
 imap <C-s> <Esc>:w<CR>
 nmap <C-s> <Esc>:w<CR>
 nmap CapsLock <Esc>
@@ -171,11 +174,28 @@ nnoremap <C-j> <C-W>j
 nnoremap <C-k> <C-W>k
 nnoremap <C-h> <C-W>h
 nnoremap <C-l> <C-W>l
+"自动补全括号和引号
+"inoremap ( ()<Left>
+inoremap ) <c-r>=ClosePair(')')<CR>
+au filetype c inoremap { {<CR>}<ESC>O
+au filetype cpp inoremap { {<CR>}<ESC>O
+inoremap } <c-r>=ClosePair('}')<CR>
+inoremap [ []<ESC>i
+inoremap ] <c-r>=ClosePair(']')<CR>
 inoremap " ""<Left>
-inoremap ' ''<Left>
-inoremap ( ()<Left>
-inoremap [ []<Left>
-inoremap { {}<Left>
+inoremap ' ''<ESC>i
+function ClosePair(char)
+    if getline('.')[col('.') - 1] == a:char
+        return "\<Right>"
+    else
+        return a:char
+    endif
+endfunction
+"inoremap " ""<Left>
+"inoremap ' ''<Left>
+"inoremap ( ()<Left>
+"inoremap [ []<Left>
+"inoremap { {}<Left>
 "Normal-mode时，可以用Tab及Shift-Tab做缩排
 nmap <tab> v>
 nmap <s-tab> v<
@@ -352,9 +372,13 @@ nmap <F4> :AuthorInfoDetect<cr>
 ""nnoremap <C-l> <C-w>l
 "}}}
 "{{{窗口最大化
-function Maximize_Window()
-	silent !wmctrl -r :ACTIVE: -b add,maximized_vert,maximized_horz
-endfunction
+if(has("win32") || has("win95") || has("win64") || has("win16"))
+    au  GUIEnter * simalt ~x
+else
+    function Maximize_Window()
+        silent !wmctrl -r :ACTIVE: -b add,maximized_vert,maximized_horz
+    endfunction
+endif
 "}}}
 "{{{删除^M
 nmap <F9> :%s/\r<CR>
@@ -374,6 +398,8 @@ autocmd BufWritePre * call RemoveTrailingWhitespace()
 "}}}
 "{{{简单的sign设置
 sign define siv text=-> icon=/usr/share/pixmaps/vim-32.xpm texthl=SignColumn linehl=ModeMsg
+"map <F7> :exe ":sign place 2 line=" . line('.') . " name=siv file=" . expand("%:p")<cr>
+"sign define siv text=-> icon=/home/lazymonkey/latex/firefox-themes-ubuntu.xpm texthl=SignColumn linehl=ModeMsg
 map <F7> :exe ":sign place 2 line=" . line('.') . " name=siv file=" . expand("%:p")<cr>
 "sign settings
 "hi SignColumn guifg=red guibg=darkgray
@@ -383,6 +409,27 @@ map <F7> :exe ":sign place 2 line=" . line('.') . " name=siv file=" . expand("%:
 "map <F7> :exe ":sign place 2 line=" . line('.') . " name=haha file=" .  expand("%:p")<cr>
 map <S-F7> :sign unplace *<cr>
 
+"}}}
+"{{{设置标尺
+map <silent> <leader>cu :if &cursorcolumn =~# '0' <Bar>
+            \set cursorcolumn <Bar>
+            \else <Bar>
+            \set nocursorcolumn <Bar>
+            \endif<CR>
+map <leader>c1 :set cc=+1 <cr>
+map <leader>c2 :set cc= <cr>
+"}}}
+"{{{高亮列
+autocmd CursorMoved * call s:HiC()
+
+function! s:HiC()
+    let l:c = getline('.')[col('.') - 1]
+    if l:c == '{' || l:c == '}'
+        set cuc
+    else
+        set nocuc
+    endif
+endf
 "}}}
 "{{{气泡提示
 function! FoldSpellBalloon()
@@ -421,11 +468,12 @@ set balloondelay=100
 "     \ 'auto_export': 1,
 
 " 多个维基项目的配置
-"let g:vimwiki_list = [{'path': 'E:/My Dropbox/vimwiki/',
-"			\ 'html_header': 'E:/My Dropbox/Public/vimwiki_template/header.htm',
-"			\ 'html_footer': 'E:/My Dropbox/Public/vimwiki_template/footer.htm',
-"			\ 'diary_link_count': 5},
-"			\{'path': 'Z:\demo\qiuchi\wiki'}]
+let g:vimwiki_list = [{'path': '~/wiki/vimwiki_src/',
+            \ 'path_html': '~/wiki/vimwiki_html/',
+			\ 'html_header': '~/wiki/vimwiki_html/template/header.htm',
+			\ 'html_footer': '~/wiki/vimwiki_html/template/footer.htm'}]
+"			\ 'diary_link_count': 5}]
+"            \{'path': ':\demo\qiuchi\wiki'}]
 
 " 对中文用户来说，我们并不怎么需要驼峰英文成为维基词条
 let g:vimwiki_camel_case = 0
@@ -444,9 +492,6 @@ let g:vimwiki_CJK_length = 1
 
 " 详见下文...
 let g:vimwiki_valid_html_tags='b,i,s,u,sub,sup,kbd,del,br,hr,div,code,h1'
-"警告! 以下为高级内容，虽然我手把手在教，但毕竟折腾耗时。
-"而且您的操作可能因为 vimwiki 将来的版本升级而失效。
-"请评估自己的时间成本！
 "一键执行wiki文件
 au filetype vimwiki map <S-F5> :call RunAllVimwikiFile()<cr>
 "au filetype vimwiki map <F5> :Vimwiki2HTML<cr>
@@ -454,13 +499,13 @@ au filetype vimwiki map <F5> :call RunOneVimwikiFile()<CR>
 func! RunOneVimwikiFile()
     exec "w"
     exec "Vimwiki2HTML"
-    exec "!google-chrome ~/vimwiki_html/%<.html"
+    exec "!google-chrome ~/wiki/vimwiki_html/%<.html"
 endfunction
 
 func! RunAllVimwikiFile()
     exec "w"
     exec "VimwikiAll2HTML"
-    exec "!google-chrome ~/vimwiki_html/*.html"
+    exec "!google-chrome ~/wiki/vimwiki_html/*.html"
 endfunction
 "}}}
 "{{{-----------------------------------------Configure the plugin -taglist------------------------------------------
@@ -563,6 +608,8 @@ function Do_CsTag()
 	endif
 endfunction
 
+set tags+=~/.vim/systags "for library functions
+
 "-----------------------------------------end Configure the plugin -cscope---------------------------------------
 "}}}
 "{{{-----------------------------------------Configure the plugin -NeoComplCache--------------------------------------
@@ -606,7 +653,11 @@ let g:tagbar_width = 30
 "-----------------------------------------end Configure the plugin -DoxygenToolkit ------------------------------------------------------------
 "}}}
 "{{{-----------------------------------------Configure the plugin -python_pydiction------------------------------------------------------------
-let g:pydiction_location = '~/.vim/tools/pydiction/complete-dict'
+if(has("win32") || has("win95") || has("win64") || has("win16"))
+    let g:pydiction_location = 'D:\Program Files\Vim\vimfiles\tools\pydiction\complete-dict'
+else
+    let g:pydiction_location = '~/.vim/tools/pydiction/complete-dict'
+endif
 "defalut g:pydiction_menu_height == 15
 "let g:pydiction_menu_height = 20
 "--------------------------------------------end Configure plugin-python_pydiction-------------------------------------------------------------
@@ -617,6 +668,23 @@ let g:pydiction_location = '~/.vim/tools/pydiction/complete-dict'
 au FileType plaintex set ft=tex
 "--------------------------------------------end Configure plugin-SnipMate-------------------------------------------------------------
 "}}}
+"{{{-----------------------------------------Configure the plugin -Vim-latex------------------------------------------------------------
+" REQUIRED. This makes vim invoke Latex-Suite when you open a tex file.
+filetype plugin on
+" IMPORTANT: win32 users will need to have 'shellslash' set so that latex
+" can be called correctly.
+set shellslash
+" IMPORTANT: grep will sometimes skip displaying the file name if you
+" search in a singe file. This will confuse Latex-Suite. Set your grep
+" program to always generate a file-name.
+set grepprg=grep/-nH/$*
+" OPTIONAL: This enables automatic indentation as you type.
+filetype indent on
+" OPTIONAL: Starting with Vim 7, the filetype of empty .tex files defaults to
+" 'plaintex' instead of 'tex', which results in vim-latex not being loaded.
+" The following changes the default filetype back to 'tex':
+let g:tex_flavor='latex'
+"}}}-----------------------------------------end Configure vim-latex------------------------------------------------------------
 "{{{-----------------------------------------python、php 和 shell 单个文件一键执行--------------------------------------------------------------------------------------
  "Run a PHP script
    function! ExecutePHPScript()
@@ -655,7 +723,7 @@ au filetype python imap <C-F5> <ESC>:call ExecutePythonScript()<CR>
  "Run a SHELL script
 au filetype sh map <F5> :!bash ./% <CR>
 au filetype sh imap <C-F5> <ESC>:!bash ./% <CR>
-au filetype tex map <F5> :call RunOneLaztexFile()<CR>
+au filetype tex imap <C-F5> <ESC>:call RunOneLaztexFile()<CR>
 func! RunOneLaztexFile()
     exec "w"
     exec "!pdflatex ./%"
