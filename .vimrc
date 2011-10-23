@@ -51,7 +51,7 @@ set hidden                  " 允许在有未保存的修改时切换缓冲区�
 set smartindent             " 开启新行时使用智能自动缩进
 set backspace=indent,eol,start
                             " 不设定在插入状态无法用退格键和 Delete 键删除回车符
-set cmdheight=2             " 设定命令行的行数为 1
+set cmdheight=1             " 设定命令行的行数为 1
 set laststatus=2            " 显示状态栏 (默认值为 1, 无法显示状态栏)
 "set foldenable             " 开始折叠
 "set foldmethod=syntax      " 设置语法折叠
@@ -72,9 +72,9 @@ hi cursorline guibg=NONE gui=underline
 							"设置光标所在行，下划线
 set cmdheight=1		        " 命令行高度
 set t_Co=256				" 指定配色方案是256色
-"set background=dark			"设置背景为黑色
+"set background=dark		"设置背景为黑色
 "colo darkZ2
-"colo desert2562				" 使用desert2562 调色板，当然这是自定义的
+"colo desert2562			" 使用desert2562 调色板，当然这是自定义的
 color ir_black
 "highlight Normal guibg=black guifg=grey
 "highlight Normal guibg=black guifg=grey
@@ -132,7 +132,7 @@ autocmd FileType xml set omnifunc=xmlcomplete#CompleteTags
 autocmd FileType java set omnifunc=javacomplete#Complet
 
 "}}}
-" 代码折叠设置 {{{
+"{{{代码折叠设置
 set foldenable                  " enable folding
 set foldcolumn=2                " add a fold column
 nnoremap <space> @=((foldclosed(line('.')) < 0) ? 'zc' : 'zo')<CR>
@@ -159,7 +159,6 @@ map <silent> <F11> :if &guioptions =~# 'T' <Bar>
 " Quick yanking to the end of the line
 imap <C-]> <Esc>
 imap <C-s> <Esc>:w<CR>
-nmap <C-s> <Esc>:w<CR>
 nmap CapsLock <Esc>
 nmap Y y$
 nnoremap j gj
@@ -197,9 +196,9 @@ endfunction
 "inoremap [ []<Left>
 "inoremap { {}<Left>
 "Normal-mode时，可以用Tab及Shift-Tab做缩排
-nmap <tab> v>
+nmap <c-tab> v>
 nmap <s-tab> v<
-vmap <tab> >gv
+vmap <c-tab> >gv
 vmap <s-tab> <gv
 " Yank/paste to the OS clipboard with ,y and ,p
 nmap <leader>y "+y
@@ -304,7 +303,7 @@ inoremap <expr> <m-;> pumvisible() ? "\<c-n>" : "\<c-x>\<c-o>\<c-n>\<c-p>\<c-r>=
 set listchars=tab:\|\ ,trail:.,extends:>,precedes:<
 if has("autocmd")
    autocmd filetype javascript,php,python set list
-   "autocmd filetype javascript,php set list
+   autocmd filetype javascript,php set list
 endif
 "}}}
 "{{{ 设置用于GUI图形用户界面的字体列表。
@@ -315,7 +314,7 @@ endif
 "{{{进行版权声明的设置
 "添加或更新头（插件AuthorInfo）
 let g:vimrc_author='Lazy.monkey™'
-let g:vimrc_email='honker.ying@gmail.com'
+let g:vimrc_email='lazymonkey.me@gmail.com'
 let g:vimrc_homepage='NULL'
 nmap <F4> :AuthorInfoDetect<cr>
 "将键盘上的F8功能键映射为添加作者信息的快捷键
@@ -508,6 +507,14 @@ func! RunAllVimwikiFile()
     exec "!google-chrome ~/wiki/vimwiki_html/*.html"
 endfunction
 "}}}
+"{{{设置terminal光标颜色
+if &term =~ "xterm\|rxvt"
+    silent !echo -ne "\e]12;HotPink\007"
+    let &t_SI="\e]12;RoyalBlue1\007"
+    let &t_EI="\e]12;HotPink\007"
+    autocmd VimLeave * :!echo -ne "\e]12;green\007"
+endif
+"}}}
 "{{{-----------------------------------------Configure the plugin -taglist------------------------------------------
 ""	map <F4> :silent! Tlist<CR> " 按下F3呼出
 	"nnoremap  :TlistToggle
@@ -685,6 +692,9 @@ filetype indent on
 " The following changes the default filetype back to 'tex':
 let g:tex_flavor='latex'
 "}}}-----------------------------------------end Configure vim-latex------------------------------------------------------------
+"{{{Congigure the plugin -Conkyrc.vim
+au BufNewFile,BufRead *conkyrc set filetype=conkyrc
+"}}}
 "{{{-----------------------------------------python、php 和 shell 单个文件一键执行--------------------------------------------------------------------------------------
  "Run a PHP script
    function! ExecutePHPScript()
@@ -723,6 +733,7 @@ au filetype python imap <C-F5> <ESC>:call ExecutePythonScript()<CR>
  "Run a SHELL script
 au filetype sh map <F5> :!bash ./% <CR>
 au filetype sh imap <C-F5> <ESC>:!bash ./% <CR>
+au filetype tex map <F5> :call RunOneLaztexFile()<CR>
 au filetype tex imap <C-F5> <ESC>:call RunOneLaztexFile()<CR>
 func! RunOneLaztexFile()
     exec "w"
@@ -771,7 +782,7 @@ def RemoveBreakpoints():
             nCurrentLine -= 1
     vim.command( 'normal %dG' % nCurrentLine)
 vim.command( 'map <C-F8> :py RemoveBreakpoints()<cr>')
-vim.command( 'map <C-D> :!python %<cr>')
+vim.command( 'map <S-F8> :!python %<cr>')
 EOF
 "}}}
 "{{{专为python做的设置
