@@ -48,7 +48,7 @@ set magic                   " 设置魔术
 set hidden                  " 允许在有未保存的修改时切换缓冲区，此时的修改由 vim 负责保存
 "set guioptions-=T          " 隐藏工具栏
 "set guioptions-=m          " 隐藏菜单栏
-set smartindent             " 开启新行时使用智能自动缩进
+"set smartindent             " 开启新行时使用智能自动缩进
 set backspace=indent,eol,start
                             " 不设定在插入状态无法用退格键和 Delete 键删除回车符
 set cmdheight=1             " 设定命令行的行数为 1
@@ -59,6 +59,8 @@ set laststatus=2            " 显示状态栏 (默认值为 1, 无法显示状�
 "setlocal foldlevel=1       " 设置折叠层数为
 autocmd Filetype c :set equalprg=indent
 							"如果是c文件调用GNU indet 进行排版
+"autocmd Filetype python :set equalprg=pydent
+                            "如果是python文件调用pydent进行排版
 "set guifont=Consolas\ \ Italic\ 14	"设置字体
 "set guifont=Consolas\ \ Regular\ 14"设置字体
 set guifont=Monaco\ \ Regular\ 14"设置字体
@@ -94,7 +96,7 @@ vnoremap <C-c> "+y
 vnoremap <C-x> "+x			" 在Visual模式中使用Ctrl+x剪切内容到全局剪贴板
 set comments=s1:/*,mb:*,ex0:/
 							"修正自动C式样注释功能 <2005/07/16>
-set tags=./tags,./../tags,./**/tags
+set tags=./tags,./../tags,./**/tags,~/workspace/geekos-0.3.0/src/project2/include/geekos/tags
 							" 增强检索功能
 set syntax=txt
 							"设置txt文件高亮显示
@@ -300,11 +302,11 @@ inoremap <expr> <m-;> pumvisible() ? "\<c-n>" : "\<c-x>\<c-o>\<c-n>\<c-p>\<c-r>=
 "endif
 "}}}
 "{{{ 显示Tab符
-set listchars=tab:\|\ ,trail:.,extends:>,precedes:<
-if has("autocmd")
-   autocmd filetype javascript,php,python set list
-   autocmd filetype javascript,php set list
-endif
+"set listchars=tab:\|\ ,trail:.,extends:>,precedes:<
+"if has("autocmd")
+"   autocmd filetype javascript,php,python set list
+"   autocmd filetype javascript,php set list
+"endif
 "}}}
 "{{{ 设置用于GUI图形用户界面的字体列表。
 if has ("win323")
@@ -692,6 +694,44 @@ filetype indent on
 " The following changes the default filetype back to 'tex':
 let g:tex_flavor='latex'
 "}}}-----------------------------------------end Configure vim-latex------------------------------------------------------------
+"{{{-----------------------------------------Configure the plugin -ropevim------------------------------------------
+"from "http://sunliwen.com/2009/12/ropevim-rope-in-vim/"
+let $PYTHONPATH .= ":~/.rope/rope:~/.rope/ropevim"
+source /home/lazymonkey/.rope/ropevim/ropevim.vim
+let ropevim_codeassist_maxfixes=10
+let ropevim_guess_project=1
+let ropevim_vim_completion=1
+let ropevim_enable_autoimport=1
+let ropevim_extended_complete=1
+let ropevim_codeassist_maxfixes=10
+let ropevim_guess_project=1
+let ropevim_vim_completion=1
+let ropevim_enable_autoimport=1
+let ropevim_extended_complete=1
+
+function! CustomCodeAssistInsertMode()
+    call RopeCodeAssistInsertMode()
+    if pumvisible()
+        return "\<C-L>\<Down>"
+    else
+        return ''
+    endif
+endfunction
+
+function! TabWrapperComplete()
+    let cursyn = synID(line('.'), col('.') - 1, 1)
+    if pumvisible()
+        return "\<C-Y>"
+    endif
+    if strpart(getline('.'), 0, col('.')-1) =~ '^\s*$' || cursyn != 0
+        return "\<Tab>"
+    else
+        return "\<C-R>=CustomCodeAssistInsertMode()\<CR>"
+    endif
+endfunction
+
+au filetype python inoremap <buffer><silent><expr> <C-d> TabWrapperComplete()
+"}}}-----------------------------------------end Configure -ropevim------------------------------------------
 "{{{Congigure the plugin -Conkyrc.vim
 au BufNewFile,BufRead *conkyrc set filetype=conkyrc
 "}}}
@@ -787,12 +827,15 @@ EOF
 "}}}
 "{{{专为python做的设置
 " 允许退格键删除和tab操作
-set smartindent
-set smarttab
+"set smartindent
+"set smarttab
 set expandtab
 set tabstop=4
-set softtabstop=4
+"set softtabstop=4
 set shiftwidth=4
-set backspace=2
+"set backspace=2
 set textwidth=79
+set listchars=tab:>-,trail:-
+set list
 "}}}
+let g:omni_sql_no_default_maps = 1

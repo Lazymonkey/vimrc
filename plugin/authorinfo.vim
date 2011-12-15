@@ -114,7 +114,7 @@ function s:AddTitle()
     normal o
     call setline('.',noTypeChar.'                 ( (oo)   )')
     normal o
-    call setline('.',noTypeChar.'+-----------oOOo---︶︶︶︶---oOOo---------------+')
+    call setline('.',noTypeChar.'+--------------oOOo---︶︶︶︶---oOOo------------------+')
     normal o
     call setline('.',noTypeChar.preChar.'     FileName  :           '.expand("%:t"))
     normal o
@@ -133,7 +133,7 @@ function s:AddTitle()
     normal o
     call setline('.',noTypeChar.preChar.'     History   :           ')
     normal o
-    call setline('.',noTypeChar.'+---------------------------------Oooo-----------+')
+    call setline('.',noTypeChar.'+------------------------------------Oooo--------------+')
     normal o
     call setline('.',noTypeChar.'')
     normal o
