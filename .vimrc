@@ -176,15 +176,19 @@ nnoremap <C-k> <C-W>k
 nnoremap <C-h> <C-W>h
 nnoremap <C-l> <C-W>l
 "自动补全括号和引号
+imap <M-(> ()<ESC>i
+imap <M-[> []<ESC>i
+imap <M-'> ''<ESC>i
+imap <M-"> ""<ESC>i
 "inoremap ( ()<Left>
-inoremap ) <c-r>=ClosePair(')')<CR>
+"inoremap ) <c-r>=ClosePair(')')<CR>
 au filetype c inoremap { {<CR>}<ESC>O
 au filetype cpp inoremap { {<CR>}<ESC>O
 inoremap } <c-r>=ClosePair('}')<CR>
-inoremap [ []<ESC>i
-inoremap ] <c-r>=ClosePair(']')<CR>
-inoremap " ""<Left>
-inoremap ' ''<ESC>i
+"inoremap [ []<ESC>i
+"inoremap ] <c-r>=ClosePair(']')<CR>
+"inoremap " ""<Left>
+"inoremap ' ''<ESC>i
 function ClosePair(char)
     if getline('.')[col('.') - 1] == a:char
         return "\<Right>"
@@ -398,10 +402,10 @@ endfunction
 autocmd BufWritePre * call RemoveTrailingWhitespace()
 "}}}
 "{{{简单的sign设置
-sign define siv text=-> icon=/usr/share/pixmaps/vim-32.xpm texthl=SignColumn linehl=ModeMsg
+"sign define siv text=-> icon=~/.vim/tools/vim.xpm texthl=SignColumn linehl=ModeMsg
 "map <F7> :exe ":sign place 2 line=" . line('.') . " name=siv file=" . expand("%:p")<cr>
 "sign define siv text=-> icon=/home/lazymonkey/latex/firefox-themes-ubuntu.xpm texthl=SignColumn linehl=ModeMsg
-map <F7> :exe ":sign place 2 line=" . line('.') . " name=siv file=" . expand("%:p")<cr>
+"map <F7> :exe ":sign place 2 line=" . line('.') . " name=siv file=" . expand("%:p")<cr>
 "sign settings
 "hi SignColumn guifg=red guibg=darkgray
 "sign define haha  text=>> texthl=SignColumn
@@ -419,6 +423,10 @@ map <silent> <leader>cu :if &cursorcolumn =~# '0' <Bar>
             \endif<CR>
 map <leader>c1 :set cc=+1 <cr>
 map <leader>c2 :set cc= <cr>
+"}}}
+"{{{设置标尺(for vim7.3)
+hi colorcolumn guibg=#7f287f
+set cc=80
 "}}}
 "{{{高亮列
 autocmd CursorMoved * call s:HiC()
