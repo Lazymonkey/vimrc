@@ -1,0 +1,93 @@
+<h2 id="toc_0.1">vim对文本加密</h2>
+<p>
+参考<code>Vim</code>中的介绍：
+要开始编辑一个需要加密的新文件，可以用 "-x" 参数来启动 <code>Vim</code>。例如:
+</p>
+<blockquote>
+$ vim -x exam.txt
+</blockquote>
+<p>
+<code>Vim</code> 提示你确定一个密码，用于为文件加密和解密:
+</p>
+<blockquote>
+Enter encryption key:
+</blockquote>
+<p>
+现在仔细键入那个密码。你所键入的字符将为星号代替，因此你看不到。为了避免由于打字错误引起麻烦，<code>Vim</code> 要求你再输入一次密码:
+</p>
+<blockquote>
+Enter same key again:
+</blockquote>
+<p><!--more-->
+现在你可以像平时一样编辑这个文件并把你所有的秘密放进去。当你编完文件要退出<code>Vim</code>时，这个文件就被加密存盘了。当你用 <code>Vim</code> 编辑这个文件时，它就会要求你再输入那同一个密码。你不需要用 <code>"-x"</code>参数。你也可以用普通的 <code>":edit"</code> 命令编辑加密的文件。<code>Vim</code> 给这个文件加上一句标记，据以识别那是经过加密的文件。如果你试图用另一个程序来阅读这个文件，你将读到一堆乱码。如果你用<code>Vim</code>来编辑这个文件，但输入了错误的密码，你也只能得到乱码。Vim 并不具备检验密码正确性的机理 (这一点使得破译密码更为困难)。
+<h3 id="toc_0.1.1">开 / 关 加 密</h3>
+要给一个文件撤除加密，设定 <code>key</code> 选项为空字符串:
+</p>
+<blockquote>
+:set key=
+</blockquote>
+<p>
+你下次把这个文件存盘时，存盘的文件就是未经加密的。设定 <code>key</code> 选项来启用加密是个坏主意。因为密码会被清清楚楚地显示在屏幕上。任何人都可以偷看到你的密码。为了避免这样的问题，创造了 <code>":X"</code> 命令。它会像<code>"-x"</code> 参数向你索取一个密码:
+</p>
+<pre>
+:X
+Enter encryption key: ******
+Enter same key again: ******
+</pre>
+<h3 id="toc_0.1.2">加 密 的 局 限 性</h3>
+<p>
+<code>vim</code> 采用的加密算法有弱点的。它对于防止那种偷窥者是绰绰有余了，但不足以防止一个手上有大量时间的密码专家。而且, 你应该知道交换文件是不加密的；所以当你在编辑文件时，拥有超级用户权限的人能够读取未经加密的文件文本。不让人们读到你的交换文件的一个方法就是不使用交换文件。如果在命令行上用了 <code>-n</code>参数，交换文件就不会被创建了 (<code>Vim</code> 把所有的东西都存放在内存里)。例如，要编辑经过加密的文件 <code>"file.txt"</code>，但不用交换文件，请用下面的命令:
+</p>
+<blockquote>
+vim -x -n file.txt
+</blockquote>
+<p>
+如果你已在经编辑这个文件了，那么交换文件 <code>swapfile</code> 可以用下面的命令禁止:
+</p>
+<blockquote>
+:setlocal noswapfile
+</blockquote>
+<p>
+由于没了交换文件，文件复原就不可能了。为了避免失去编辑的成果，要比平时更勤快地存盘你的文件。文件在内存中以明文形式存在。因此任何具备权限的人都能进入编辑者的内存浏览，从而发现这个文件的内容。如果你使用信息文件 <code>viminfo</code>，别忘了文本寄存器的内容也是明明白白写在其中的。如果你真的要保证一个文件内容的安全，那么，你必须永远只在一个不联网的可携式计算机上编辑这个文件，使用优良的加密工具，并且在不用时，把你的计算机锁进一个大保险箱。
+<h2 id="toc_0.2">在vim中实现批量加密</h2>
+</p>
+<pre lang="bash">
+#!/bin/bash
+# Encrypt file with vim
+    　　
+if (test $# -lt 2) then
+　 echo Usage: decrypt password filename
+else
+　 vim -e -s -c ":set key=$1" -c ':wq' $2
+　 echo "$2 encrypted."
+fi
+</pre>
+
+<h2 id="toc_0.3">使用技巧</h2>
+<p>
+依稀记得有一款密码管理软件叫做<a href="http://keepass.info/">KeePass</a>，其最大的特点就是用户只需记住一个短密码（弱口令？:)）来管理其它重要密码，其实<code>Vim</code>就可以用来管理密码，在你的家目录(~/)新建文本文件<code>.keeppasswd.wiki</code>(用<code>VimWiki</code>可以方便地导出HTML文本表格,记得使用<code>vim -x .keeppasswd</code>),写入你的用户名、密码之类的有效信息，像我这样:
+</p>
+<pre lang="bash">
+==SNS==
+    | website   | login name              | passwd                 |
+    | sina      | lazymonkey.me@gmail.com | 密码不能给你看啦:(     |
+    | twitter   | lazymk                  | 密码不能给你看啦:(     |
+    | CSDN(old) | juagle                  | 这里就可以写下密码咯:) |
+    | CSDN(new) | lazymonkey-me           | 密码不能给你看啦:(     |
+
+    ==MAIL==
+    | mail-type  | address                 | passwd             |
+    | gmail(new) | lazymonkey.me@gmail.com | 密码不能给你看啦:( |
+    | gmail(old) | honker.ying@gmail.com   | 密码不能给你看啦:( |
+    | hotmail    | honker.ying@hotmail.com | 密码不能给你看啦:( |
+    | qqmail     | lazy.monkey@foxmail.com | 密码不能给你看啦:( |
+</pre>
+<p>
+然后在你所使用shell(the zshell is the best!)的配置文件中加一句：
+</p>
+<pre lang="bash">
+alias 'kpass=gvim ~/.passwd.wiki'
+</pre>
+<p>
+ok,配置文件生效后，在终端输入<code>kpass</code>,爽去吧！have a good time...:)
+</p>

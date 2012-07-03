@@ -118,8 +118,8 @@ function! s:get_html_header(title, subdir, charset) "{{{
     let css_name = s:root_path(a:subdir).css_name
   endif
 
-  " if no VimwikiGet('html_header') set up or error while reading template
-  " file -- use default header.
+   if no VimwikiGet('html_header') set up or error while reading template
+  file -- use default header.
   call add(lines, '<html>')
   call add(lines, '<head>')
   call add(lines, '<link rel="Stylesheet" type="text/css" href="'.

@@ -1,0 +1,49 @@
+
+"                 {/ ． ．\}
+"                 ( (oo)   )
+"+--------------oOOo---︶︶︶︶---oOOo------------------+
+"     FileName  :           lazy-vplayer.vim
+"     Describe  :
+"     Author    :           Lazy.monkey™
+"     Email     :           lazymonkey.me@gmail.com
+"     HomePage  :           lazymonkey.sinaapp.com
+"     Version   :           0.0.1
+"     LastChange:           2012-04-18 11:36:54
+"     History   :
+"+------------------------------------Oooo--------------+
+
+
+if !has("python")
+    echo "Required vim complied with '+python'"
+    finish
+endif
+
+command! -nargs=0 Play exec('py play()')
+
+python<<EOF
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+import mad, ao, time, os, sys, vim, threading, subprocess
+from os import path
+from datetime import datetime
+from time import strftime, gmtime
+from subprocess import call
+
+class timer(threading.Thread):
+    """docstring for timer"""
+    def __init__(self, arg):
+        super(timer, self).__init__()
+        self.arg = arg
+
+def load_config():
+    vim.current
+def play():
+    os.system("player.py a.mp3 &")
+    sys.stdout.write("当前歌曲：对不起")
+    """
+    if path.exists(file_name):
+        sys.stderr.write("No file can be found!--- %s\n" % file_name)
+        return
+    """
+
+EOF

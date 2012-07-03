@@ -11,8 +11,9 @@
 "                Last modified   :2011-03-19 00:21
 "                version         :1.8.2
 "
-"                                    Lazy.monkey™
-"                           honker.ying@gmail.com
+"                                      Lazy.monkey™
+"                           lazymonkey.me@gmail.com
+"                      lazymonkey.is-programmer.com
 "
 " +---------------------------------Oooo-----------+
 "Lazy.monkey™'s Vim settings, plugins...
@@ -23,7 +24,7 @@
 "{{{基本设置
 set nocompatible            " 关闭 vi 兼容模式
 "setlocal spell spelllang=en "开启拼写检查
-set mouse=a					"让vim支持鼠标
+set mouse=a                 "让vim支持鼠标
 syntax on                   " 自动语法高亮
 set number                  " 显示行号
 set nocursorline            " 不突出显示当前行
@@ -58,56 +59,57 @@ set laststatus=2            " 显示状态栏 (默认值为 1, 无法显示状�
 "set foldcolumn=0           " 设置折叠区域的宽度
 "setlocal foldlevel=1       " 设置折叠层数为
 autocmd Filetype c :set equalprg=indent
-							"如果是c文件调用GNU indet 进行排版
+                            "如果是c文件调用GNU indet 进行排版
 "autocmd Filetype python :set equalprg=pydent
                             "如果是python文件调用pydent进行排版
-"set guifont=Consolas\ \ Italic\ 14	"设置字体
-"set guifont=Consolas\ \ Regular\ 14"设置字体
-set guifont=Monaco\ \ Regular\ 14"设置字体
+"set guifont=Consolas\ \ Regular\ 15  "设置字体
+set guifont=monofur\ \ Regular\ 16"设置字体
+"set guifont=Monaco\ \ Regular\ 14"设置字体
 "set guifont=Monaco \\ Regular\ 14
-set gfw=Consolas\ \ Regular\ 11	"设置中文字体
+set gfw=Consolas\ \ Regular\ 12 "设置中文字体
 "exe
 "startinsert
-							"启动vim默认为插入模式
+                            "启动vim默认为插入模式
 set cursorline
 hi cursorline guibg=NONE gui=underline
-							"设置光标所在行，下划线
-set cmdheight=1		        " 命令行高度
-set t_Co=256				" 指定配色方案是256色
-"set background=dark		"设置背景为黑色
+                            "设置光标所在行，下划线
+set cmdheight=1             " 命令行高度
+set t_Co=256                " 指定配色方案是256色
+set background=dark        "设置背景为黑色
 "colo darkZ2
-"colo desert2562			" 使用desert2562 调色板，当然这是自定义的
-color ir_black
+"colo desert2562            " 使用desert2562 调色板，当然这是自定义的
+color busybee
 "highlight Normal guibg=black guifg=grey
 "highlight Normal guibg=black guifg=grey
-set bsdir=buffer			" 设定文件浏览器目录为当前目录
-filetype plugin on			" 文件类型检查打开
+set bsdir=buffer            " 设定文件浏览器目录为当前目录
+filetype plugin on          " 文件类型检查打开
 "set fileencodings=cp936,gbk,gb2132,ucs-bom,utf-8
 "set fileencodings=utf-8,gbk,cp936,gb2132,ucs-bom
 set enc=utf-8
 set fencs=utf-8,ucs-bom,shift-jis,gb18030,gbk,gb2312,cp936
-							" 让vim按照gbk，utf-8（没有头），utf-8的顺序识别
-set directory=~/.tmp		"让swap文件保存在~/.tmp目录下
-set noswapfile				"不生成swap文件
+                            " 让vim按照gbk，utf-8（没有头），utf-8的顺序识别
+set directory=~/.tmp        "让swap文件保存在~/.tmp目录下
+set noswapfile              "不生成swap文件
 inoremap <C-v> <esc>:set paste<cr>mui<C-R>+<esc>mv'uV'v=:set nopaste<cr>
-							" 在插入模式中使用Ctrl+v粘贴全局剪贴板内容
+                            " 在插入模式中使用Ctrl+v粘贴全局剪贴板内容
 vnoremap <C-c> "+y
-							" 在Visual模式中使用Ctrl+c复制内容到全局剪贴板
-vnoremap <C-x> "+x			" 在Visual模式中使用Ctrl+x剪切内容到全局剪贴板
+                            " 在Visual模式中使用Ctrl+c复制内容到全局剪贴板
+vnoremap <C-x> "+x          " 在Visual模式中使用Ctrl+x剪切内容到全局剪贴板
 set comments=s1:/*,mb:*,ex0:/
-							"修正自动C式样注释功能 <2005/07/16>
+                            "修正自动C式样注释功能 <2005/07/16>
 set tags=./tags,./../tags,./**/tags,~/workspace/geekos-0.3.0/src/project2/include/geekos/tags
-							" 增强检索功能
+                            " 增强检索功能
 set syntax=txt
-							"设置txt文件高亮显示
+                            "设置txt文件高亮显示
 set fileformats=unix,dos    " 保存文件格式
 set statusline=%k%F[%{&ff}:%{&fenc}]%m%r%h%w\ %{strftime(\"%d/%m/%y\ -\ %H:%M\")}\ %=[%{GitBranch()}]\ %=[%l,%c,%p%%]
-							"状态栏信息
+                            "状态栏信息
 """}}}
 "{{{设定<leader>取词功能
 nmap <silent><leader>d :!sdcv <cword> <CR>
                             "设置字典（配合sdcv）
-                            "安装：$sudo apt-get install sdcv
+                            "安装：$sudo apt-get install sdcv(ubuntu/debian)
+                            "or    $sudo pacman -S sdcv(Arch)
                             "下载 stardic 的本地字典即可。（~/.stardict/dic/）!
 "}}}
 "{{{打开文件时恢复上次编辑的位置
@@ -138,9 +140,9 @@ autocmd FileType java set omnifunc=javacomplete#Complet
 set foldenable                  " enable folding
 set foldcolumn=2                " add a fold column
 nnoremap <space> @=((foldclosed(line('.')) < 0) ? 'zc' : 'zo')<CR>
-								"使用space键为折叠开/关
-set foldmethod=marker           " detect triple-{ style fold markers
-"set foldmethod=syntax			"以程式语言语法作为折叠规则
+                                "使用space键为折叠开/关
+"set foldmethod=marker           " detect triple-{ style fold markers
+set foldmethod=syntax           "以程式语言语法作为折叠规则
 set foldlevelstart=0            " start out with everything folded
 set foldopen=block,hor,insert,jump,mark,percent,quickfix,search,tag,undo
 " which commands trigger auto-unfold
@@ -150,17 +152,19 @@ set foldopen=block,hor,insert,jump,mark,percent,quickfix,search,tag,undo
 set guioptions-=m
 set guioptions-=T
 map <silent> <F11> :if &guioptions =~# 'T' <Bar>
-			\set guioptions-=T <Bar>
-			\set guioptions-=m <bar>
-			\else <Bar>
-			\set guioptions+=T <Bar>
-			\set guioptions+=m <Bar>
-			\endif<CR>
+            \set guioptions-=T <Bar>
+            \set guioptions-=m <bar>
+            \else <Bar>
+            \set guioptions+=T <Bar>
+            \set guioptions+=m <Bar>
+            \endif<CR>
 "}}}
 "{{{绑定一些快捷键
 " Quick yanking to the end of the line
 imap <C-]> <Esc>
 imap <C-s> <Esc>:w<CR>
+imap <C-a> <Esc><S-i>
+imap <C-e> <Esc><S-a>
 nmap CapsLock <Esc>
 nmap Y y$
 nnoremap j gj
@@ -219,76 +223,76 @@ map <C-b> :tabn<CR>
 imap <C-F5> <ESC>:call Do_OneFileMake()<CR>
 map <F5> :call Do_OneFileMake()<CR>
 function Do_OneFileMake()
-	if expand("%:p:h")!=getcwd()
-		echohl WarningMsg | echo "Fail to make! This file is not in the current dir! Press <F7> to redirect to the dir of this file." | echohl None
-		return
-	endif
-	let sourcefileename=expand("%:t")
-	if (sourcefileename=="" || (&filetype!="cpp" && &filetype!="c"))
-		echohl WarningMsg | echo "Fail to make! Please select the right file!" | echohl None
-		return
-	endif
-	let deletedspacefilename=substitute(sourcefileename,' ','','g')
-	if strlen(deletedspacefilename)!=strlen(sourcefileename)
-		echohl WarningMsg | echo "Fail to make! Please delete the spaces in the filename!" | echohl None
-		return
-	endif
-	if &filetype=="c"
-		if g:iswindows==1
-			set makeprg=gcc\ -o\ %<.exe\ %
-		else
-			set makeprg=gcc\ -o\ %<\ %
-		endif
-	elseif &filetype=="cpp"
-		if g:iswindows==1
-			set makeprg=g++\ -o\ %<.exe\ %
-		else
-			set makeprg=g++\ -o\ %<\ %
-		endif
-	elseif &filetype=="cs"
-		set makeprg=csc\ \/nologo\ \/out:%<.exe\ %
-	endif
-	if(g:iswindows==1)
-		let outfilename=substitute(sourcefileename,'\(\.[^.]*\)$','.exe','g')
-		let toexename=outfilename
-	else
-		let outfilename=substitute(sourcefileename,'\(\.[^.]*\)$','','g')
-		let toexename=outfilename
-	endif
+    if expand("%:p:h")!=getcwd()
+        echohl WarningMsg | echo "Fail to make! This file is not in the current dir! Press <F7> to redirect to the dir of this file." | echohl None
+        return
+    endif
+    let sourcefileename=expand("%:t")
+    if (sourcefileename=="" || (&filetype!="cpp" && &filetype!="c"))
+        echohl WarningMsg | echo "Fail to make! Please select the right file!" | echohl None
+        return
+    endif
+    let deletedspacefilename=substitute(sourcefileename,' ','','g')
+    if strlen(deletedspacefilename)!=strlen(sourcefileename)
+        echohl WarningMsg | echo "Fail to make! Please delete the spaces in the filename!" | echohl None
+        return
+    endif
+    if &filetype=="c"
+        if g:iswindows==1
+            set makeprg=gcc\ -o\ %<.exe\ %
+        else
+            set makeprg=gcc\ -o\ %<\ %
+        endif
+    elseif &filetype=="cpp"
+        if g:iswindows==1
+            set makeprg=g++\ -o\ %<.exe\ %
+        else
+            set makeprg=g++\ -o\ %<\ %
+        endif
+    elseif &filetype=="cs"
+        set makeprg=csc\ \/nologo\ \/out:%<.exe\ %
+    endif
+    if(g:iswindows==1)
+        let outfilename=substitute(sourcefileename,'\(\.[^.]*\)$','.exe','g')
+        let toexename=outfilename
+    else
+        let outfilename=substitute(sourcefileename,'\(\.[^.]*\)$','','g')
+        let toexename=outfilename
+    endif
 
-	if filereadable(outfilename)
-		if(g:iswindows==1)
-			let outdeletedsuccess=delete(getcwd()."\\".outfilename)
-		else
-			let outdeletedsuccess=delete("./".outfilename)
-		endif
-		if(outdeletedsuccess!=0)
-			set makeprg=make
-			echohl WarningMsg | echo "Fail to make! I cannot delete the ".outfilename | echohl None
-			return
-		endif
-	endif
-	execute "silent make"
-	set makeprg=make
+    if filereadable(outfilename)
+        if(g:iswindows==1)
+            let outdeletedsuccess=delete(getcwd()."\\".outfilename)
+        else
+            let outdeletedsuccess=delete("./".outfilename)
+        endif
+        if(outdeletedsuccess!=0)
+            set makeprg=make
+            echohl WarningMsg | echo "Fail to make! I cannot delete the ".outfilename | echohl None
+            return
+        endif
+    endif
+    execute "silent make"
+    set makeprg=make
 
-	execute "normal :"
-	if filereadable(outfilename)
-		if(g:iswindows==1)
-			execute "!".toexename
-		else
-			execute "!./".toexename
-		endif
-	endif
-	execute "copen"
+    execute "normal :"
+    if filereadable(outfilename)
+        if(g:iswindows==1)
+            execute "!".toexename
+        else
+            execute "!./".toexename
+        endif
+    endif
+    execute "copen"
 endfunction
 "}}}
 "{{{进行make的设置
 map <F6> :call Do_make()<CR>
 map <c-F6> :silent make clean<CR>
 function Do_make()
-	set makeprg=make
-	execute "silent make"
-	execute "copen"
+    set makeprg=make
+    execute "silent make"
+    execute "copen"
 endfunction
 "}}}
 "{{{让自动补全根据用户写的部分来慢慢减小补全的搜索范围
@@ -314,14 +318,14 @@ inoremap <expr> <m-;> pumvisible() ? "\<c-n>" : "\<c-x>\<c-o>\<c-n>\<c-p>\<c-r>=
 "}}}
 "{{{ 设置用于GUI图形用户界面的字体列表。
 if has ("win323")
-	set guifont=YaHei\ Consolas\ Hybrid:h12
+    set guifont=YaHei\ Consolas\ Hybrid:h12
 endif
 "}}}
 "{{{进行版权声明的设置
 "添加或更新头（插件AuthorInfo）
 let g:vimrc_author='Lazy.monkey™'
 let g:vimrc_email='lazymonkey.me@gmail.com'
-let g:vimrc_homepage='NULL'
+let g:vimrc_homepage='lazymonkey.is-programmer.com'
 nmap <F4> :AuthorInfoDetect<cr>
 "将键盘上的F8功能键映射为添加作者信息的快捷键
 "map <F4> :call TitleDet()<cr>'s
@@ -391,20 +395,20 @@ nmap <F9> :%s/\r<CR>
 "{{{自动除去多余的空白行
 " From: Vigil
 function RemoveTrailingWhitespace()
-	if &ft != "diff"
-		let b:curcol = col(".")
-		let b:curline = line(".")
-		silent! %s/\s\+$//
-		silent! %s/\(\s*\n\)\+\%$//
-		call cursor(b:curline, b:curcol)
-	endif
+    if &ft != "diff"
+        let b:curcol = col(".")
+        let b:curline = line(".")
+        silent! %s/\s\+$//
+        silent! %s/\(\s*\n\)\+\%$//
+        call cursor(b:curline, b:curcol)
+    endif
 endfunction
 autocmd BufWritePre * call RemoveTrailingWhitespace()
 "}}}
 "{{{简单的sign设置
 "sign define siv text=-> icon=~/.vim/tools/vim.xpm texthl=SignColumn linehl=ModeMsg
 "map <F7> :exe ":sign place 2 line=" . line('.') . " name=siv file=" . expand("%:p")<cr>
-"sign define siv text=-> icon=/home/lazymonkey/latex/firefox-themes-ubuntu.xpm texthl=SignColumn linehl=ModeMsg
+"sign define siv text=-> icon=/home/lazymonkey/latex/chromium-themes-ubuntu.xpm texthl=SignColumn linehl=ModeMsg
 "map <F7> :exe ":sign place 2 line=" . line('.') . " name=siv file=" . expand("%:p")<cr>
 "sign settings
 "hi SignColumn guifg=red guibg=darkgray
@@ -425,7 +429,7 @@ map <leader>c1 :set cc=+1 <cr>
 map <leader>c2 :set cc= <cr>
 "}}}
 "{{{设置标尺(for vim7.3)
-hi colorcolumn guibg=#7f287f
+hi colorcolumn guibg=#3c414c
 set cc=80
 "}}}
 "{{{高亮列
@@ -442,29 +446,29 @@ endf
 "}}}
 "{{{气泡提示
 function! FoldSpellBalloon()
-	let foldStart = foldclosed(v:beval_lnum )
-	let foldEnd   = foldclosedend(v:beval_lnum)
-	let lines = []
-	" Detect if we are in a fold
-	if foldStart < 0
-		" Detect if we are on a misspelled word
-		let lines = spellsuggest( spellbadword(v:beval_text)[ 0 ], 5, 0 )
-	else
-		" we are in a fold
-		let numLines = foldEnd - foldStart + 1
-		" if we have too many lines in fold, show only the first 14
-		" and the last 14 lines
-		if ( numLines > 31 )
-			let lines = getline( foldStart, foldStart + 14 )
-			let lines += [ '-- Snipped ' . ( numLines - 30 ) . ' lines --' ]
-			let lines += getline( foldEnd - 14, foldEnd )
-		else
-			"less than 30 lines, lets show all of them
-			let lines = getline( foldStart, foldEnd )
-		endif
-	endif
-	" return result
-	return join( lines, has( "balloon_multiline" ) ? "\n" : " " )
+    let foldStart = foldclosed(v:beval_lnum )
+    let foldEnd   = foldclosedend(v:beval_lnum)
+    let lines = []
+    " Detect if we are in a fold
+    if foldStart < 0
+        " Detect if we are on a misspelled word
+        let lines = spellsuggest( spellbadword(v:beval_text)[ 0 ], 5, 0 )
+    else
+        " we are in a fold
+        let numLines = foldEnd - foldStart + 1
+        " if we have too many lines in fold, show only the first 14
+        " and the last 14 lines
+        if ( numLines > 31 )
+            let lines = getline( foldStart, foldStart + 14 )
+            let lines += [ '-- Snipped ' . ( numLines - 30 ) . ' lines --' ]
+            let lines += getline( foldEnd - 14, foldEnd )
+        else
+            "less than 30 lines, lets show all of them
+            let lines = getline( foldStart, foldEnd )
+        endif
+    endif
+    " return result
+    return join( lines, has( "balloon_multiline" ) ? "\n" : " " )
 endfunction
 set balloonexpr=FoldSpellBalloon()
 set ballooneval
@@ -479,9 +483,9 @@ set balloondelay=100
 " 多个维基项目的配置
 let g:vimwiki_list = [{'path': '~/wiki/vimwiki_src/',
             \ 'path_html': '~/wiki/vimwiki_html/',
-			\ 'html_header': '~/wiki/vimwiki_html/template/header.htm',
-			\ 'html_footer': '~/wiki/vimwiki_html/template/footer.htm'}]
-"			\ 'diary_link_count': 5}]
+            \ 'html_header': '~/wiki/vimwiki_html/template/header.htm',
+            \ 'html_footer': '~/wiki/vimwiki_html/template/footer.htm'}]
+"           \ 'diary_link_count': 5}]
 "            \{'path': ':\demo\qiuchi\wiki'}]
 
 " 对中文用户来说，我们并不怎么需要驼峰英文成为维基词条
@@ -508,14 +512,16 @@ au filetype vimwiki map <F5> :call RunOneVimwikiFile()<CR>
 func! RunOneVimwikiFile()
     exec "w"
     exec "Vimwiki2HTML"
-    exec "!google-chrome ~/wiki/vimwiki_html/%<.html"
+    exec "!chromium ~/wiki/vimwiki_html/%<.html"
 endfunction
 
 func! RunAllVimwikiFile()
     exec "w"
     exec "VimwikiAll2HTML"
-    exec "!google-chrome ~/wiki/vimwiki_html/*.html"
+    exec "!chromium ~/wiki/vimwiki_html/*.html"
 endfunction
+"让 Vimwiki 支持 TagList 的大纲视图
+let tlist_vimwiki_settings = 'wiki;h:Headers'
 "}}}
 "{{{设置terminal光标颜色
 if &term =~ "xterm\|rxvt"
@@ -526,8 +532,8 @@ if &term =~ "xterm\|rxvt"
 endif
 "}}}
 "{{{-----------------------------------------Configure the plugin -taglist------------------------------------------
-""	map <F4> :silent! Tlist<CR> " 按下F3呼出
-	"nnoremap  :TlistToggle
+""  map <F4> :silent! Tlist<CR> " 按下F3呼出
+    "nnoremap  :TlistToggle
         "let Tlist_Auto_Open=0 " Let the tag list open automatically
         "let Tlist_Auto_Update " Update the tag list automatically
         "let Tlist_Compact_Format=1 " Show small menu
@@ -553,85 +559,86 @@ let Tlist_Inc_Winwidth=0
 "{{{-----------------------------------------Configure the plugin -cscope------------------------------------------
 "判断当前操作系统
 if(has("win32") || has("win95") || has("win64") || has("win16"))
-	let g:iswindows=1
+    let g:iswindows=1
 else
-	let g:iswindows=0
+    let g:iswindows=0
 endif
 autocmd BufEnter * lcd %:p:h
 map <F12> :call Do_CsTag()<CR>
-nmap <C-@>s :cs find s <C-R>=expand("<cword>")<CR><CR>:copen<CR>
-nmap <C-@>g :cs find g <C-R>=expand("<cword>")<CR><CR>
-nmap <C-@>c :cs find c <C-R>=expand("<cword>")<CR><CR>:copen<CR>
-nmap <C-@>t :cs find t <C-R>=expand("<cword>")<CR><CR>:copen<CR>
-nmap <C-@>e :cs find e <C-R>=expand("<cword>")<CR><CR>:copen<CR>
-nmap <C-@>f :cs find f <C-R>=expand("<cfile>")<CR><CR>:copen<CR>
-nmap <C-@>i :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>:copen<CR>
-nmap <C-@>d :cs find d <C-R>=expand("<cword>")<CR><CR>:copen<CR>
+nmap <C-c>s :cs find s <C-R>=expand("<cword>")<CR>:copen<CR>
+nmap <C-c>g :cs find g <C-R>=expand("<cword>")<CR><CR>
+nmap <C-c>c :cs find c <C-R>=expand("<cword>")<CR><CR>:copen<CR>
+nmap <C-c>t :cs find t <C-R>=expand("<cword>")<CR><CR>:copen<CR>
+nmap <C-c>e :cs find e <C-R>=expand("<cword>")<CR><CR>:copen<CR>
+nmap <C-c>f :cs find f <C-R>=expand("<cfile>")<CR><CR>:copen<CR>
+nmap <C-c>i :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>:copen<CR>
+nmap <C-c>d :cs find d <C-R>=expand("<cword>")<CR><CR>:copen<CR>
 function Do_CsTag()
-	autocmd BufEnter * lcd %:p:h
+    autocmd BufEnter * lcd %:p:h
 
-	let dir = getcwd()
-	if filereadable("tags")
-		if(g:iswindows==1)
-			let tagsdeleted=delete(dir."\\"."tags")
-		else
-			let tagsdeleted=delete("./"."tags")
-		endif
-		if(tagsdeleted!=0)
-			echohl WarningMsg | echo "Fail to do tags! I cannot delete the tags" | echohl None
-			return
-		endif
-	endif
-	if has("cscope")
-		silent! execute "cs kill -1"
-	endif
-	if filereadable("cscope.files")
-		if(g:iswindows==1)
-			let csfilesdeleted=delete(dir."\\"."cscope.files")
-		else
-			let csfilesdeleted=delete("./"."cscope.files")
-		endif
-		if(csfilesdeleted!=0)
-			echohl WarningMsg | echo "Fail to do cscope! I cannot delete the cscope.files" | echohl None
-			return
-		endif
-	endif
-	if filereadable("cscope.out")
-		if(g:iswindows==1)
-			let csoutdeleted=delete(dir."\\"."cscope.out")
-		else
-			let csoutdeleted=delete("./"."cscope.out")
-		endif
-		if(csoutdeleted!=0)
-			echohl WarningMsg | echo "Fail to do cscope! I cannot delete the cscope.out" | echohl None
-			return
-		endif
-	endif
-	if(executable('ctags'))
-		"silent! execute "!ctags -R --c-types=+p --fields=+S *"
-		silent! execute "!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q ."
-	endif
-	if(executable('cscope') && has("cscope") )
-		if(g:iswindows!=1)
-			silent! execute "!find . -name '*.h' -o -name '*.c' -o -name '*.cpp' -o -name '*.java' -o -name '*.cs' > cscope.files"
-		else
-			silent! execute "!dir /s/b *.c,*.cpp,*.h,*.java,*.cs >> cscope.files"
-		endif
-		silent! execute "!cscope -b"
-		execute "normal :"
-		if filereadable("cscope.out")
-			execute "cs add cscope.out"
-		endif
-	endif
+    let dir = getcwd()
+    if filereadable("tags")
+        if(g:iswindows==1)
+            let tagsdeleted=delete(dir."\\"."tags")
+        else
+            let tagsdeleted=delete("./"."tags")
+        endif
+        if(tagsdeleted!=0)
+            echohl WarningMsg | echo "Fail to do tags! I cannot delete the tags" | echohl None
+            return
+        endif
+    endif
+    if has("cscope")
+        silent! execute "cs kill -1"
+    endif
+    if filereadable("cscope.files")
+        if(g:iswindows==1)
+            let csfilesdeleted=delete(dir."\\"."cscope.files")
+        else
+            let csfilesdeleted=delete("./"."cscope.files")
+        endif
+        if(csfilesdeleted!=0)
+            echohl WarningMsg | echo "Fail to do cscope! I cannot delete the cscope.files" | echohl None
+            return
+        endif
+    endif
+    if filereadable("cscope.out")
+        if(g:iswindows==1)
+            let csoutdeleted=delete(dir."\\"."cscope.out")
+        else
+            let csoutdeleted=delete("./"."cscope.out")
+        endif
+        if(csoutdeleted!=0)
+            echohl WarningMsg | echo "Fail to do cscope! I cannot delete the cscope.out" | echohl None
+            return
+        endif
+    endif
+    if(executable('ctags'))
+        "silent! execute "!ctags -R --c-types=+p --fields=+S *"
+        silent! execute "!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q ."
+    endif
+    if(executable('cscope') && has("cscope") )
+        if(g:iswindows!=1)
+            silent! execute "!find . -name '*.h' -o -name '*.c' -o -name '*.cpp' -o -name '*.java' -o -name '*.cs' > cscope.files"
+        else
+            silent! execute "!dir /s/b *.c,*.cpp,*.h,*.java,*.cs >> cscope.files"
+        endif
+        silent! execute "!cscope -b"
+        execute "normal :"
+        if filereadable("cscope.out")
+            execute "cs add cscope.out"
+        endif
+    endif
 endfunction
 
+set tags+=./tags
 set tags+=~/.vim/systags "for library functions
 
 "-----------------------------------------end Configure the plugin -cscope---------------------------------------
 "}}}
 "{{{-----------------------------------------Configure the plugin -NeoComplCache--------------------------------------
-"let g:NeoComplCache_DisableAutoComplete = 1		"设置不自动弹出NeoComplCache自动补全列表
-"let g:NeoComplCache_EnableAtStartup = 1			"激活ncc
+"let g:NeoComplCache_DisableAutoComplete = 1        "设置不自动弹出NeoComplCache自动补全列表
+"let g:NeoComplCache_EnableAtStartup = 1            "激活ncc
 "Ok ,I enjoy the time!
 "------------------------------------------end Configure the plugin -NeoComplCache----------------------------------
 "}}}
@@ -653,7 +660,7 @@ nmap <silent> <F3> :WMToggle<cr>
 "}}}
 "{{{-----------------------------------------Configure the plugin -DoxygenToolkit ---------------------------------------------------------------
 map fg : Dox<cr>
-let g:DoxygenToolkit_authorName="Honker.y"
+let g:DoxygenToolkit_authorName="lazymonkey"
 let g:DoxygenToolkit_licenseTag="My own license\<enter>"
 let g:DoxygenToolkit_undocTag="DOXIGEN_SKIP_BLOCK"
 let g:DoxygenToolkit_briefTag_pre = "@brief\t"
@@ -739,7 +746,7 @@ function! TabWrapperComplete()
 endfunction
 
 au filetype python inoremap <buffer><silent><expr> <C-d> TabWrapperComplete()
-"}}}-----------------------------------------end Configure -ropevim------------------------------------------
+"}}}-----------------------------------------end Configure -ropevim------------------------
 "{{{Congigure the plugin -Conkyrc.vim
 au BufNewFile,BufRead *conkyrc set filetype=conkyrc
 "}}}
@@ -788,7 +795,7 @@ func! RunOneLaztexFile()
     exec "!pdflatex ./%"
     exec "!evince ./%<.pdf"
 endfunction
-au filetype html map <F5> :!google-chrome ./% <CR>
+au filetype html map <F5> :!chromium ./% <CR>
 "}}}
 "{{{python 调试
 python << EOF
@@ -842,8 +849,7 @@ set tabstop=4
 "set softtabstop=4
 set shiftwidth=4
 "set backspace=2
-set textwidth=79
+"set textwidth=79
 set listchars=tab:>-,trail:-
 set list
 "}}}
-let g:omni_sql_no_default_maps = 1

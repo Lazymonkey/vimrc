@@ -1,8 +1,9 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =6
-let g:netrw_dirhist_1='/home/lazymonkey/test'
-let g:netrw_dirhist_2='/home/lazymonkey/.fcitx'
-let g:netrw_dirhist_3='/home/lazymonkey/workspace/djcode/dkweb/dkweb/Paper/templatetags'
-let g:netrw_dirhist_4='/home/lazymonkey/workspace/djcode/FreeNet/templates/user_manage'
-let g:netrw_dirhist_5='/home/lazymonkey/workspace/djcode/dkweb/dkweb/testdata'
-let g:netrw_dirhist_6='/home/lazymonkey/public/gmail'
+let g:netrw_dirhist_cnt =7
+let g:netrw_dirhist_1='/home/lazymonkey/Public/Linkbook/app/assets/stylesheets'
+let g:netrw_dirhist_2='/home/lazymonkey/.idesktop'
+let g:netrw_dirhist_3='/home/lazymonkey/.config/gtk-3.0'
+let g:netrw_dirhist_4='/home/lazymonkey/workspace/latex_learning'
+let g:netrw_dirhist_5='/home/lazymonkey/wiki/vimwiki_html/css'
+let g:netrw_dirhist_6='/home/lazymonkey/.idesktop'
+let g:netrw_dirhist_7='/home/lazymonkey/Public/Woolink/script'
